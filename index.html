@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarot Score Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Tarot Score Tracker</h1>
+
+    <div id="player-inputs">
+        <input type="text" class="player" placeholder="joueur 1"></input>
+        <input type="text" class="player" placeholder="joueur 2"></input>
+        <input type="text" class="player" placeholder="joueur 3"></input>
+        <input type="text" class="player" placeholder="joueur 4 (Optionnel)"></input>
+        <input type="text" class="player" placeholder="joueur 5 (Optionnel)"></input>
+    </div>
+
+    <button id="lockin" onclick="lockin()">LOCK IN PLAYERS</button>
+
+    <div id='afterPlayers' style="display: none;">
+        <div class="bet-buttons">
+            <button class="toggle-button">Petite</button>
+            <button class="toggle-button">Garde</button>
+            <button class="toggle-button">Garde sans</button>
+            <button class="toggle-button">Garde contre</button>
+            <button class="toggle-button">Petit chelem</button>
+            <button class="toggle-button">Grand chelem</button>
+        </div>
+
+        <select id="score">
+            <option value="60">60</option>
+            <option value="50">50</option>
+            <option value="40">40</option>
+            <option value="30">30</option>
+            <option value="20">20</option>
+            <option value="10">10</option>
+            <option value="0">0</option>
+            <option value="-10">-10</option>
+            <option value="-20">-20</option>
+            <option value="-30">-30</option>
+            <option value="-40">-40</option>
+            <option value="-50">-50</option>
+            <option value="-60">-60</option>
+        </select>
+
+        <button class="petit" onclick="petitactive()"> Petit au bout </button>
+
+        <button class="calculate" onclick="calculate()">GET SCORE</button>
+
+        <button class="undo" onclick="undo()">UNDO</button>
+
+    </div>
+
+    <table id="results"></table>
+
+    <button class="reset" onclick="reset()">RESET</button>
+
+    <script src="script.js"></script>
+</body>
+</html>

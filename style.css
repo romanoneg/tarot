@@ -1,0 +1,67 @@
+#player-inputs {
+    display: flex;
+    gap: 10px;
+}
+
+.player {
+    padding: 8px;
+    border: 1px solid #ccc;
+}
+
+.playerButton {
+  padding: 8px 16px;
+  border: none;
+  background-color: lightgray;
+  color: white;
+  cursor: pointer;
+}
+
+.playerButton.active {
+  padding: 8px 16px;
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+}
+
+.petit {
+    padding: 8px 16px;
+    border: none;
+    background-color: lightgray;
+    color: white;
+    cursor: pointer;
+}
+
+.petit.active {
+    padding: 8px 16px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+.undo {
+    padding: 8px 16px;
+    border: none;
+    background-color: lightgray;
+    color: white;
+    cursor: pointer;
+}
+
+
+.bet-buttons {
+  display: flex; /* Arrange buttons horizontally */
+  gap: 10px;     /* Add space between buttons */
+}
+
+.toggle-button {
+  padding: 10px 20px;
+  border: none;
+  background-color: lightgray;
+  cursor: pointer;
+}
+
+.toggle-button.active {
+  background-color: blue;
+  color: white;
+}
