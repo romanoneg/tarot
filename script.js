@@ -27,7 +27,7 @@ let points = {
   'Grand chelem': 1000
 }
 
-function undo(){
+function undofun(){
   scores = Object.entries(scores).reduce((result, [key, value]) => {
   result[key] = value - undo[key]; 
   return result;
