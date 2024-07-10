@@ -2,7 +2,7 @@ const buttons = document.querySelectorAll('.bet-buttons > button');
 
 var current_bet = null;
 var scores = {};
-var undo = null;
+const undo = [];
 
 const table = document.getElementById("results");
 
@@ -28,14 +28,14 @@ let points = {
 }
 
 function undofun(){
-  scores = Object.entries(scores).reduce((result, [key, value]) => {
-  result[key] = value - undo[key]; 
-  return result;
-  }, {});
-  undo = Object.fromEntries(
-    Object.entries(scores).map(([key]) => [key, 0])
-  );  
-  updateTable(scores);
+  if (undo.length > 0){
+    whatundo = undo.pop()
+    scores = Object.entries(scores).reduce((result, [key, value]) => {
+    result[key] = value - whatundo[key]; 
+    return result;
+    }, {});
+    updateTable(scores);
+  }
 }
 
 function petitactive(){
@@ -75,7 +75,7 @@ function calculate(){
   result[key] = value + curdict[key]; 
   return result;
   }, {});
-  undo = curdict;
+  undo.push(curdict);
   updateTable(scores);
 }
 
@@ -109,7 +109,8 @@ function singlebutton(event){
   result[key] = value + curdict[key]; 
   return result;
   }, {});
-  undo = curdict;
+  console.log(typeof undo);
+  undo.push(curdict);
   updateTable(scores);
 }
 
@@ -193,9 +194,6 @@ function lockin() {
       inputFields[i].remove(); // Remove empty input
     }
   };
-  undo = Object.fromEntries(
-    Object.entries(scores).map(([key]) => [key, 0])
-  );  
   updateTable(scores);
   transformButton.remove()
 };
