@@ -5,6 +5,7 @@ var scores = {};
 const undo = [];
 
 const table = document.getElementById("results");
+let newtable = true;
 
 let names = ["Misere", "Double Misere", "Poignee", 
         "Double Poignee", "Triple Poignee"];
@@ -34,7 +35,7 @@ function undofun(){
     result[key] = value - whatundo[key]; 
     return result;
     }, {});
-    updateTable(scores);
+    remove_row();
   }
 }
 
@@ -76,7 +77,7 @@ function calculate(){
   return result;
   }, {});
   undo.push(curdict);
-  updateTable(scores);
+  add_row(scores);
 }
 
 buttons.forEach(button => {
@@ -111,24 +112,24 @@ function singlebutton(event){
   }, {});
   console.log(typeof undo);
   undo.push(curdict);
-  updateTable(scores);
+  add_row(scores);
 }
 
-function updateTable(data) {
-  table.innerHTML = ''; // Clear the table
-
-  // Create table header row
-  const headerRow = table.insertRow();
-  for (const key in data) {
-    const headerCell = headerRow.insertCell();
-    headerCell.textContent = key;
+function add_row(row){
+  if (newtable){
+    remove_row();
+    newtable = false;
   }
-
-  // Create table data row
   const dataRow = table.insertRow();
-  for (const value of Object.values(data)) {
+  for (const value of Object.values(row)) {
     const dataCell = dataRow.insertCell();
     dataCell.textContent = value;
+  }
+}
+
+function remove_row(){
+  if (table.rows.length > 1){
+    table.deleteRow(table.rows.length - 1);
   }
 }
 
@@ -194,7 +195,20 @@ function lockin() {
       inputFields[i].remove(); // Remove empty input
     }
   };
-  updateTable(scores);
+  // Create table header row
+  const curdict = Object.fromEntries(
+    Object.entries(scores).map(([key]) => [key, 0])
+  );  
+  const headerRow = table.insertRow();
+  for (const key in curdict) {
+    const headerCell = headerRow.insertCell();
+    headerCell.textContent = key;
+  }
+  const dataRow = table.insertRow();
+  for (const value of Object.values(curdict)) {
+    const dataCell = dataRow.insertCell();
+    dataCell.textContent = value;
+  }
   transformButton.remove()
 };
 
