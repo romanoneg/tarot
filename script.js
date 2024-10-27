@@ -17,8 +17,6 @@ let values = {
   "Triple Poignee": 30
 };
 
-let petitaubout = false;
-
 let points = {
   'Petite': 20,
   'Garde' : 40,
@@ -39,17 +37,6 @@ function undofun(){
   }
 }
 
-function petitactive(){
-  const button = document.querySelectorAll('.petit')[0];
-  if (button.classList.contains('active')) {
-    button.classList.remove('active'); // Deactivate if already active
-    petitaubout = false;
-  } else{
-    button.classList.add('active');   
-    petitaubout = true;
-  }
-}
-
 function calculate(){
   let cur_points = points[current_bet];
   const curdict = Object.fromEntries(
@@ -59,10 +46,11 @@ function calculate(){
   if (pass < 0){
     cur_points *= -1;
   }
-  cur_points = +cur_points + +pass;
-  if (petitaubout){
-    cur_points = +cur_points + 10;
+  if (pass == -1){
+    pass = 0;
   }
+  cur_points = +cur_points + +pass;
+  cur_points = +cur_points + +document.getElementById("petit").value;
   const activeButtons = document.querySelectorAll('.playerButton.active');
   const notactiveButtons = document.querySelectorAll('.playerButton:not(.active)');
   notactiveButtons.forEach((btn) => curdict[btn.textContent] += -cur_points);
@@ -77,7 +65,8 @@ function calculate(){
   return result;
   }, {});
   undo.push(curdict);
-  add_row(scores);
+  // console.log(activeButtons.forEach((btn) => btn.textContent))
+  add_row(scores, Array.from(activeButtons).map(button => button.textContent).join(', '), current_bet);
 }
 
 buttons.forEach(button => {
@@ -87,7 +76,6 @@ buttons.forEach(button => {
     // Activate the clicked button
     button.classList.add('active');
     current_bet = button.textContent || button.innerText;;
-    console.log(current_bet)
   });
 });
 
@@ -110,12 +98,11 @@ function singlebutton(event){
   result[key] = value + curdict[key]; 
   return result;
   }, {});
-  console.log(typeof undo);
   undo.push(curdict);
-  add_row(scores);
+  add_row(scores, hiddenValue, curname);
 }
 
-function add_row(row){
+function add_row(row, players, bet){
   if (newtable){
     remove_row();
     newtable = false;
@@ -123,8 +110,16 @@ function add_row(row){
   const dataRow = table.insertRow();
   for (const value of Object.values(row)) {
     const dataCell = dataRow.insertCell();
-    dataCell.textContent = value;
+    dataCell.textContent = (value > 0 ? "+" : "") + value;
   }
+  let pass = document.getElementById("score").value;
+  if (pass == "0"){
+    pass = "+0";
+  }
+  if (pass == "-1"){
+    pass = "-0";
+  }
+  dataRow.insertCell().textContent = players + " " + current_bet + " " + pass;
 }
 
 function remove_row(){
@@ -204,11 +199,13 @@ function lockin() {
     const headerCell = headerRow.insertCell();
     headerCell.textContent = key;
   }
+  headerRow.insertCell().textContent = "Historique"
   const dataRow = table.insertRow();
   for (const value of Object.values(curdict)) {
     const dataCell = dataRow.insertCell();
     dataCell.textContent = value;
   }
+
   transformButton.remove()
 };
 

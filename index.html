@@ -37,7 +37,8 @@
             <option value="30">30</option>
             <option value="20">20</option>
             <option value="10">10</option>
-            <option value="0">0</option>
+            <option value="0">+0</option>
+            <option value="-1">-0</option>
             <option value="-10">-10</option>
             <option value="-20">-20</option>
             <option value="-30">-30</option>
@@ -46,7 +47,12 @@
             <option value="-60">-60</option>
         </select>
 
-        <button class="petit" onclick="petitactive()"> Petit au bout </button>
+        <select id="petit">
+            <option value="0">Pas de petit au bout</option>
+            <option value="10">Petit au bout pour les attaquants</option>
+            <option value="-10">Petit au bout pour les defenseurs</option>
+        </select>
+        <!-- <button class="petit" onclick="petitactive()"> Petit au bout </button> -->
 
         <button class="calculate" onclick="calculate()">GET SCORE</button>
 
